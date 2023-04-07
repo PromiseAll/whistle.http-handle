@@ -18,8 +18,10 @@ const formatGotConfig = (reqConfig) => {
     method,
     headers,
     searchParams: query,
-    decompress: false,
+    decompress: true, //自动解压响应
     allowGetBody: true, // get可以附带body
+    throwHttpErrors: false,//禁止抛出错误
+    retry: 0//禁止重试
   }
   switch (bodyType) {
     case "formData":

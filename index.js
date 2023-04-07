@@ -21,8 +21,6 @@ app.use(middleware)
 
 const findRules = (rules, method, url) => {
   return rules.find(rule => {
-    console.log(url, rule.url);
-    console.log(micromatch.isMatch(url, rule.url));
     return rule.method.toLocaleLowerCase() == method.toLocaleLowerCase() && micromatch.isMatch(url, rule.url)
   })
 }
@@ -31,7 +29,8 @@ exports.server = (server) => {
   const serverCallback = app.callback()
   server.on("request", (req, res) => {
     try {
-      const { method, url, ruleValue } = req.originalReq
+      const { method } = req
+      const { url, ruleValue } = req.originalReq
       const rulesPath = ruleValue || path.resolve("whistle.handle.rules.js")
       if (fsa.pathExistsSync(rulesPath)) {
         decache(rulesPath);
@@ -42,10 +41,11 @@ exports.server = (server) => {
           app.context.rule = rule
           serverCallback(req, res)
         } else {
-          req.passThrough(); // 直接透传
+          req.passThrough();
         }
       } else {
-        if (!Array.isArray(rules)) { throw Error(`${rulesPath} path does not exist`) }
+        console.log(`${rulesPath} path does not exist`);
+        req.passThrough();
       }
     } catch (error) {
       res.end(error.toString())
