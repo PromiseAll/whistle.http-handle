@@ -1,0 +1,31 @@
+{
+  "name": "whistle.http-handle",
+  "version": "1.0.0",
+  "description": "whistle plugin - Modify http request and response",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PromiseAll/whistle.http-handle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PromiseAll/whistle.http-handle/issues"
+  },
+  "homepage": "https://github.com/PromiseAll/whistle.http-handle#readme",
+  "keywords": [
+    "whistle",
+    "proxy",
+    "handle"
+  ],
+  "author": "PromiseAll",
+  "license": "ISC",
+  "dependencies": {
+    "decache": "^4.6.1",
+    "got": "^11.8.6",
+    "http-body-parser": "^1.1.9",
+    "koa": "^2.14.1",
+    "micromatch": "^4.0.5",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {}
+}
