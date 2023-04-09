@@ -11,9 +11,9 @@ app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
+    console.log(err);
     ctx.status = err.status || 500
     ctx.body = err.message
-    ctx.app.emit("error", err, ctx)
   }
 })
 app.use(bodyParser({ enableTypes: ['json', 'form', 'text', 'multipart', 'stream'] }));
@@ -24,9 +24,9 @@ const findRules = (rules, method, url) => {
     return rule.method.toLocaleLowerCase() == method.toLocaleLowerCase() && micromatch.isMatch(url, rule.url)
   })
 }
-
+const serverCallback = app.callback()
 exports.server = (server) => {
-  const serverCallback = app.callback()
+
   server.on("request", (req, res) => {
     try {
       const { method } = req

@@ -17,8 +17,8 @@ const formatGotConfig = (reqConfig) => {
     url,
     method,
     headers,
-    searchParams: query,
-    decompress: true, //自动解压响应
+    searchParams: formatQuery(query),
+    decompress: false, //自动解压响应
     allowGetBody: true, // get可以附带body
     throwHttpErrors: false,//禁止抛出错误
     retry: 0//禁止重试
@@ -63,4 +63,16 @@ const getResConfigByGotRes = (gotRes) => {
     config.body = rawBody
   }
   return config
+}
+
+const formatQuery = (query) => {
+  const searchParams = []
+  for (const [key, value] of Object.entries(query)) {
+    if (Array.isArray(value)) {
+      value.forEach(v => searchParams.push([key, v]))
+    } else {
+      searchParams.push([key, value])
+    }
+  }
+  return new URLSearchParams(searchParams).toString()
 }
