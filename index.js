@@ -44,11 +44,12 @@ exports.server = (server) => {
           req.passThrough();
         }
       } else {
-        console.log(`${rulesPath} path does not exist`);
-        req.passThrough();
+        throw Error(`${rulesPath} path does not exist`)
       }
     } catch (error) {
-      res.end(error.toString())
+      console.log(error.toString());
+      req.passThrough();
+      // res.end(error.toString())
     }
   })
 
