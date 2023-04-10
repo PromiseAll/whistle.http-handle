@@ -56,15 +56,16 @@ const getResConfigByGotRes = (gotRes) => {
     headers,
     body
   }
-  if (headers["content-type"].includes("application/json")) {
+  const contentType = headers["content-type"]
+  if (contentType.includes("json")) {
     config.body = JSON.parse(body)
-  }
-  if (headers["content-type"].includes("stream")) {
+  } else if (contentType.includes("text") || contentType.includes("javascript") || contentType.includes("xml")) {
+    config.body = body
+  } else {
     config.body = rawBody
   }
   return config
 }
-
 const formatQuery = (query) => {
   const searchParams = []
   for (const [key, value] of Object.entries(query)) {
