@@ -56,7 +56,7 @@ const getResConfigByGotRes = (gotRes) => {
     headers,
     body
   }
-  const contentType = headers["content-type"]
+  const contentType = headers["content-type"] || ''
   if (contentType.includes("json")) {
     config.body = JSON.parse(body)
   } else if (contentType.includes("text") || contentType.includes("javascript") || contentType.includes("xml")) {

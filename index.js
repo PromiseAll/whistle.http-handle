@@ -21,7 +21,7 @@ app.use(middleware)
 
 const findRules = (rules, method, url) => {
   return rules.find(rule => {
-    return rule.method.toLocaleLowerCase() == method.toLocaleLowerCase() && micromatch.isMatch(url, rule.url)
+    return (rule.method == "*" || rule.method.toLocaleLowerCase() == method.toLocaleLowerCase()) && micromatch.isMatch(url, rule.url)
   })
 }
 const serverCallback = app.callback()
