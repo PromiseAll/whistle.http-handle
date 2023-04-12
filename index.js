@@ -21,7 +21,7 @@ app.use(middleware)
 
 const findRules = (rules, method, url) => {
   return rules.find(rule => {
-    return (anymatch(rule.method.toLocaleLowerCase() == method.toLocaleLowerCase())) && anymatch(url, rule.url)
+    return anymatch(rule.method.toLocaleLowerCase(), method.toLocaleLowerCase()) && anymatch(url, rule.url)
   })
 }
 const serverCallback = app.callback()
