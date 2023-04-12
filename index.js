@@ -2,7 +2,6 @@ const Koa = require('koa');
 const path = require("path")
 const bodyParser = require('http-body-parser').koa;
 const middleware = require("./middleware/middleware")
-const anymatch = require('anymatch');
 const fsa = require("fs-extra")
 const decache = require("decache")
 const app = new Koa();
@@ -19,9 +18,22 @@ app.use(async (ctx, next) => {
 app.use(bodyParser({ enableTypes: ['json', 'form', 'text', 'multipart', 'stream'] }));
 app.use(middleware)
 
+
+const matchUrl = (pattern, url) => {
+  // 将模式中的 ** 替换为一个特殊的占位符
+  pattern = pattern.replace(/\*\*/g, '##');
+  // 将模式中的 * 替换为一个正则表达式
+  pattern = pattern.replace(/\*/g, '[^/]+');
+  // 将特殊的占位符替换回 **
+  pattern = pattern.replace(/##/g, '.*');
+  // 构建一个新的正则表达式对象
+  var regex = new RegExp('^' + pattern + '$');
+  // 使用正则表达式测试给定的 URL 是否匹配模式
+  return regex.test(url);
+}
 const findRules = (rules, method, url) => {
   return rules.find(rule => {
-    return anymatch(rule.method.toLocaleLowerCase(), method.toLocaleLowerCase()) && anymatch(rule.url, url)
+    return (rule.method == "*" || (rule.method.toLocaleLowerCase() == method.toLocaleLowerCase())) && matchUrl(rule.url, url)
   })
 }
 const serverCallback = app.callback()
