@@ -2,7 +2,7 @@ const Koa = require('koa');
 const path = require("path")
 const bodyParser = require('http-body-parser').koa;
 const middleware = require("./middleware/middleware")
-const micromatch = require('micromatch');
+const anymatch = require('anymatch');
 const fsa = require("fs-extra")
 const decache = require("decache")
 const app = new Koa();
@@ -21,7 +21,7 @@ app.use(middleware)
 
 const findRules = (rules, method, url) => {
   return rules.find(rule => {
-    return (rule.method == "*" || rule.method.toLocaleLowerCase() == method.toLocaleLowerCase()) && micromatch.isMatch(url, rule.url)
+    return (anymatch(rule.method.toLocaleLowerCase() == method.toLocaleLowerCase())) && anymatch(url, rule.url)
   })
 }
 const serverCallback = app.callback()

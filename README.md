@@ -29,7 +29,7 @@ wwww.baidu.com http-handle://E:\code\my\whistle.http-handle\index.js
 ````js
 module.exports = [
   {
-    // 匹配的 url 可使用 ** ，* ，？匹配符
+    // 匹配的 url 可使用 ** ，* 匹配符
     url: "**/api.juejin.cn/recommend_api/v1/article/recommend_cate_feed",
     // 匹配的 method
     method: "get",
