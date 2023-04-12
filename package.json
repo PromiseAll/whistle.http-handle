@@ -1,6 +1,6 @@
 {
   "name": "whistle.http-handle",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "whistle plugin - Modify http request and response",
   "main": "index.js",
   "scripts": {},
