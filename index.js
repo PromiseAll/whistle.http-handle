@@ -5,6 +5,7 @@ const bodyParser = require("http-body-parser").koa;
 const middleware = require("./middleware/middleware");
 const fsa = require("fs-extra");
 const decache = require("decache");
+
 const app = new Koa();
 // 错误处理
 app.use(async (ctx, next) => {
@@ -36,7 +37,16 @@ const findRules = (rules, method, url) => {
     return (rule.method == "*" || rule.method.toLocaleLowerCase() == method.toLocaleLowerCase()) && matchUrl(rule.url, url);
   });
 };
+const loadBaseRulesModule = () => {
+  try {
+    require(process.env.RULES_DIR);
+  } catch (error) {
+    console.log(`没有找到规则模块:${process.env.RULES_DIR}`);
+  }
+};
+
 const serverCallback = app.callback();
+loadBaseRulesModule();
 exports.server = server => {
   server.on("request", (req, res) => {
     try {
@@ -79,4 +89,8 @@ exports.server = server => {
     // 修改普通 tcp 请求用
     req.passThrough(); // 直接透传
   });
+
+  // server.on("error", err => {
+  //   console.log(err);
+  // });
 };
