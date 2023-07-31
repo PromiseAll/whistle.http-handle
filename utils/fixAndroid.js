@@ -1,0 +1,8 @@
+const os = require("os");
+const path = require("path");
+os.isAndroid = os.platform().includes("android");
+if (os.isAndroid) {
+  os.homedir = () => "/sdcard";
+  os.tmpdir = () => "/sdcard/.temp/";
+}
+process.env.RULES_DIR = path.join(os.homedir(), "whistle.http-handle.rules");
