@@ -6,4 +6,4 @@ if (os.isAndroid) {
   os.tmpdir = () => "/sdcard/.temp/";
 }
 process.env.RULES_DIR = path.join(os.homedir(), "whistle.http-handle.rules");
-console.log(`规则默认路径:${process.env.RULES_DIR}`);
+// console.log(`规则默认路径:${process.env.RULES_DIR}`);
