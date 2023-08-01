@@ -2,6 +2,7 @@ const os = require("os");
 const path = require("path");
 os.isAndroid = os.platform().includes("android");
 if (os.isAndroid) {
+  process.env.HOME = "/sdcard";
   os.homedir = () => "/sdcard";
   os.tmpdir = () => "/sdcard/.temp/";
 }

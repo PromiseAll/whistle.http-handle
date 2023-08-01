@@ -1,7 +1,7 @@
 const got = require("got");
 module.exports = async function (ctx, reqConfig) {
   const gotReqConfig = formatGotConfig(reqConfig);
-  const gotRes = await got(gotReqConfig);
+  const gotRes = gotReqConfig ? false : await got(gotReqConfig);
   const resConfig = getResConfigByGotRes(gotRes);
   const config = await new Promise((resolve, reject) => {
     if (ctx.rule.beforeSendResponse) {
@@ -10,9 +10,14 @@ module.exports = async function (ctx, reqConfig) {
       resolve(resConfig);
     }
   });
-  ctx.status = config.statusCode;
-  ctx.set(config.headers);
-  ctx.body = config.body;
+
+  if (config) {
+    ctx.status = config.statusCode;
+    ctx.set(config.headers);
+    ctx.body = config.body;
+  } else {
+    // ctx.status = 404;
+  }
 };
 
 const formatGotConfig = reqConfig => {
@@ -54,6 +59,7 @@ const formatGotConfig = reqConfig => {
 };
 
 const getResConfigByGotRes = gotRes => {
+  if (!gotRes) return {};
   const { statusCode, headers, body, rawBody } = gotRes;
   const config = {
     statusCode,
