@@ -3,12 +3,13 @@
 ```js
 * http-handle://
 ```
-
-默认规则路径 js 文件为项目下的 whistle.handle.rules.js
+默认规则路径 js 文件为项目下的当前用户文件home文件夹下的 whistle.handle.rules/index.js,例如：
+`windows:C:\Users\Administrator\whistle.http-handle.rules`
+`android:/sdcard/whistle.http-handle.rules/index.js`
 
 ## 配置 whistle 规则 rules
 
-匹配的域名 http-handle://规则路径
+匹配的域名 http-handle://自定义规则路径
 
 ```js
 wwww.baidu.com http-handle://E:\code\my\whistle.http-handle\index.js
