@@ -1,7 +1,7 @@
 const got = require("got");
 module.exports = async function (ctx, reqConfig) {
   const gotReqConfig = formatGotConfig(reqConfig);
-  const gotRes = gotReqConfig ? false : await got(gotReqConfig);
+  const gotRes = gotReqConfig ? await got(gotReqConfig) : false;
   const resConfig = getResConfigByGotRes(gotRes);
   const config = await new Promise((resolve, reject) => {
     if (ctx.rule.beforeSendResponse) {
