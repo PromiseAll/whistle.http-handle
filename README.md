@@ -14,6 +14,10 @@
 wwww.baidu.com http-handle://E:\code\my\whistle.http-handle\index.js
 ```
 
+## 流程图
+
+![流程图片](flow.png)
+
 ## 规则
 
 - reqConfig 真正请求时的数据配置
